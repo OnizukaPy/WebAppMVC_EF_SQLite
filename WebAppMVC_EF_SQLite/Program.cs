@@ -3,7 +3,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+#region Seeding
+if (Seeding.IsEmpty()) {
+    // aggiungiamo i prodotti
+    Seeding.AddProduct("Pasta", 1.5m);
+    Seeding.AddProduct("Pane", 2.5m);
+    Seeding.AddProduct("Latte", 1.0m);
+    Seeding.AddProduct("Uova", 3.0m);
+    Seeding.AddProduct("Pomodori", 2.0m);
+}
 
+#endregion
 
 var app = builder.Build();
 
