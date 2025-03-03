@@ -12,6 +12,8 @@ public class Costumer {
     // Il ! indica che non sarà mai null
     [Required]
     public string Surname { get; set; } = null!;
+    // aggiungiamo la mail che può essere nulla
+    public string? Email { get; set; }
 
     // poi un indirizzo e un numero di telefono
     public string? Address { get; set; }

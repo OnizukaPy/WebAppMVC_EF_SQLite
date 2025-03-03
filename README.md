@@ -147,6 +147,14 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
+### Aggiornamento della struttura del database
+
+Per aggiornare la struttura del database, il passaggio da fare è il seguente: 
+
+1. Modificare il modello aggiungendo il campo che si vuole aggiungere o modificare, oppure rimuovere
+2. Creare una nuova migrazione con il comando `dotnet ef migrations add NomeMigrazione`
+3. Applicare la migrazione al database con il comando `dotnet ef database update`
+
 File di `GlobalUsing.cs`:
 
 ```csharp
