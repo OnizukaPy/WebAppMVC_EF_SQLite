@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Qui inseriremo il codice per la connessione al database (in questo caso SQLite)
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=WebAppMVC_EF_SQLite.db";
 // Aggiungiamo il servizio per la gestione degli utenti
 builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlite(connectionString));
 

@@ -185,11 +185,15 @@ Per aggiornare la struttura del database, il passaggio da fare è il seguente:
 2. Creare una nuova migrazione con il comando `dotnet ef migrations add NomeMigrazione`
 3. Applicare la migrazione al database con il comando `dotnet ef database update`
 
-### Utilizzo delle Secret di ASP.NET Core per gestire le stringe di connessione
+### `DA RIVEDERE` - Utilizzo delle Secret di ASP.NET Core per gestire le stringe di connessione
 
 Per poter utilizzare le secret occorre installare il pacchetto `Microsoft.Extensions.Configuration.UserSecrets` e `Microsoft.Extensions.Configuration.UserSecrets.Tools`.
 
 ```bash
+# Installiamo i pachetti
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 8.0.1
+dotnet add package Microsoft.Extensions.SecretManager.Tools --version 2.0.2
+```
 # inizializzare le secret
 dotnet user-secrets init
 # aggiungere una secret

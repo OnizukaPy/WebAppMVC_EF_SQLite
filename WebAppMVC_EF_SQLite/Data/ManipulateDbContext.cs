@@ -12,7 +12,7 @@ public class ManipulateDbContext {
     public ManipulateDbContext() {
         // inizializziamo il contesto passato come parametro
         _options = new DbContextOptionsBuilder<AppDBContext>()
-            .UseSqlite("DefaultConnection")
+            .UseSqlite("Data Source=WebAppMVC_EF_SQLite.db")
             .Options;
         _context = new AppDBContext(_options);
         
