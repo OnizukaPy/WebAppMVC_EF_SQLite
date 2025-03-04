@@ -4,6 +4,9 @@ global using System.IO;
 global using System.Collections.Generic;
 global using System.Data.SQLite;
 
+// Per la questione della localizzazione
+global using Microsoft.AspNetCore.Localization;
+
 // Data annotation per i modelli
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;

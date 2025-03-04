@@ -193,7 +193,6 @@ Per poter utilizzare le secret occorre installare il pacchetto `Microsoft.Extens
 # Installiamo i pachetti
 dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 8.0.1
 dotnet add package Microsoft.Extensions.SecretManager.Tools --version 2.0.2
-```
 # inizializzare le secret
 dotnet user-secrets init
 # aggiungere una secret
@@ -209,6 +208,33 @@ Creare poi un json con le seguenti informazioni. andrà poi salvato in una carte
     }
 }
 ```
+
+### Generazione automatica di pagine CRUD MVC
+
+[Guida Generale](https://learn.microsoft.com/it-it/aspnet/core/fundamentals/tools/dotnet-aspnet-codegenerator?view=aspnetcore-8.0#controller-options)
+[Guida MVC](https://learn.microsoft.com/it-it/aspnet/core/tutorials/first-mvc-app/adding-model?view=aspnetcore-8.0&tabs=visual-studio-code)
+
+Per generare automaticamente le pagine CRUD di un modello occorre aggiungere dei packages di scaffolding. I comandi da eseguire è il seguente:
+
+```bash
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 8.0.7
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 8.0.13
+```
+
+Aggiungere il tool di generazione di codice:
+
+```bash
+dotnet tool install -g dotnet-aspnet-codegenerator # se togliamo il -g lo installerà solo per questo progetto.
+```
+
+Dopo di che occorre lanciare la generazione che in questo caso sarà per il modello `Product`:
+
+```bash
+# la sintassi del comando è
+dotnet aspnet-codegenerator controller -name ProductsController -m Product --dataContext AppDBContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries --databaseProvider sqlite
+```
+
+## GlobalUsing
 
 File di `GlobalUsing.cs`:
 
