@@ -3,6 +3,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Qui inseriremo il codice per la connessione al database (in questo caso SQLite)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Aggiungiamo il servizio per la gestione degli utenti
+builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlite(connectionString));
+
 #region Seeding
 if (Seeding.IsEmpty()) {
     // aggiungiamo i prodotti

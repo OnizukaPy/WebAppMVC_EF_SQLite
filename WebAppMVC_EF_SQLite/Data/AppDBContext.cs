@@ -11,11 +11,15 @@ public class AppDBContext : DbContext {
     public DbSet<Order> Orders { get; set; } = null!;
     public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
 
-    // il metodo OnConfiguring che verrà chiamato quando il contesto viene configurato
+    // il costruttore della classe
+    public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
+
+    /* // il metodo OnConfiguring che verrà chiamato quando il contesto viene configurato
+    // Per evitare rischi di possibile esposizione di dati sensibili si sposta questo nel Program.cs
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         // verrà configurato per utilizzare il provider SQLite
         // e verrà passato il nome del file del database
-        optionsBuilder.UseSqlite("Data Source=WebAppMVC_EF_SQLite.db");
-    }
+        if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite("Data Source=WebAppMVC_EF_SQLite.db");
+    } */
 
 }

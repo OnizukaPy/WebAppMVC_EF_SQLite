@@ -12,3 +12,7 @@ global using System.ComponentModel.DataAnnotations.Schema;
 global using WebAppMVC_EF_SQLite.Models;
 // using per usare DBContext
 global using WebAppMVC_EF_SQLite.Data;
+
+// Using per far funzionare le pages
+global using System.Diagnostics;
+global using Microsoft.AspNetCore.Mvc;

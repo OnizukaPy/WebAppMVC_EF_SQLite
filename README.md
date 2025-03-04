@@ -133,9 +133,39 @@ public class AppDBContext : DbContext {
         // e verrà passato il nome del file del database
         optionsBuilder.UseSqlite("Data Source=WebAppMVC_EF_SQLite.db");
     }
-
 }
 ```
+
+Si può utilizzare un costruttore dentro la classe per passare delle opzioni al contesto del database. Aggiungendo il costruttore con un argomento poi ovunque viene usato dovrà essere ripetuta la stessa configurazione.
+
+```csharp
+// il costruttore della classe
+public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
+```
+
+Nella classe poi di manipolazione del Database inseriremo un costruttore che farà questo
+
+```csharp
+public ManipulateDbContext() {
+    // inizializziamo il contesto passato come parametro
+    _options = new DbContextOptionsBuilder<AppDBContext>()
+        .UseSqlite("Data Source=WebAppMVC_EF_SQLite.db")
+        .Options;
+    _context = new AppDBContext(_options);
+    
+}
+```
+
+Per poi nel `Program.cs` andare a configurare il contesto del database.
+
+```csharp
+// Qui inseriremo il codice per la connessione al database (in questo caso SQLite)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=WebAppMVC_EF_SQLite.db";
+// Aggiungiamo il servizio per la gestione degli utenti
+builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlite(connectionString));
+```
+
+Se si fa questa modifica non occorre più il metodo `OnConfiguring` nel contesto del database.
 
 Una volta creato il modello occorre lanciare la creazione del database mediante i comandi di migrazione di dotnet:
 
@@ -154,6 +184,27 @@ Per aggiornare la struttura del database, il passaggio da fare è il seguente:
 1. Modificare il modello aggiungendo il campo che si vuole aggiungere o modificare, oppure rimuovere
 2. Creare una nuova migrazione con il comando `dotnet ef migrations add NomeMigrazione`
 3. Applicare la migrazione al database con il comando `dotnet ef database update`
+
+### Utilizzo delle Secret di ASP.NET Core per gestire le stringe di connessione
+
+Per poter utilizzare le secret occorre installare il pacchetto `Microsoft.Extensions.Configuration.UserSecrets` e `Microsoft.Extensions.Configuration.UserSecrets.Tools`.
+
+```bash
+# inizializzare le secret
+dotnet user-secrets init
+# aggiungere una secret
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Data Source=WebAppMVC_EF_SQLite.db"
+```
+
+Creare poi un json con le seguenti informazioni. andrà poi salvato in una cartella nascosta `.secrets` nella cartella del progetto.
+
+```json
+{
+    "ConnectionStrings": {
+        "DefaultConnection": "Data Source=WebAppMVC_EF_SQLite.db"
+    }
+}
+```
 
 File di `GlobalUsing.cs`:
 

@@ -1,8 +1,40 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    // recuperiamo dal modello della pagina il valore della proprietà MessageToView
+    var message = ViewData["MessageToView"];
+    // se il valore è nullo, assegnamo un valore di default
+    if (message == null) {
+        message = "La variabile Message è nulla";
+    }
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <p class="text-center">@message</p>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    @* inseriamo una tabella *@
+    <div class="table">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @* per ogni persona presente nella lista, creiamo una riga della tabella 
+                Model è l'oggetto passato in argomento al metodo View nel controller.*@
+                @foreach (var product in Model) {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
 </div>

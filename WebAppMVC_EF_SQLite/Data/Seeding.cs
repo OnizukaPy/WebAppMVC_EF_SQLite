@@ -5,30 +5,30 @@ namespace WebAppMVC_EF_SQLite.Data;
 
 public static class Seeding {
 
+    // Dichiariamo un manipolatore
+    static ManipulateDbContext? _manipulateDbContext = new();
 
     // creiamo un metodo statico per aggiungere un prodotto
     public static void AddProduct(string name, decimal price) {
-        // dentro uno using andiamo ad aggiungere il prodotto e salvare i cambiamenti
-        using (var context = new AppDBContext()) {
-            // la sintassi del comando sarà Context.NomeTabella.Add(OggettoDaInserire)
-            context.Products.Add(
-                    new Product { 
-                        Name = name, 
-                        Price = price 
-                        }
-                    );
-            
-            // salviamo i cambiamenti
-            context.SaveChanges();
-        }
+        
+        // la sintassi del comando sarà Context.NomeTabella.Add(OggettoDaInserire)
+        _manipulateDbContext?._context?.Products.Add(
+                new Product { 
+                    Name = name, 
+                    Price = price 
+                    }
+                );
+        
+        // salviamo i cambiamenti
+        _manipulateDbContext?._context?.SaveChanges();
+        
     }
 
     // creiamo un metodo per capire se la taballe è vuota
     public static bool IsEmpty() {
 
-        using var context = new AppDBContext();
         // se il conteggio dei prodotti è 0, la tabella è vuota
-        Console.WriteLine($"Products count: {context.Products.Count()}");
-        return context.Products.Count() == 0;
+        Console.WriteLine($"Products count: {_manipulateDbContext?._context?.Products.Count()}");
+        return _manipulateDbContext?._context?.Products.Count() == 0;
     }
 }
